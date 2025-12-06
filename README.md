@@ -56,25 +56,46 @@ A production-ready Django REST API blueprint with Docker, featuring Celery for a
 
 2. **Create environment file**
    
-   Create a `.env` file in the root directory with the following variables:
+   Copy the example environment file and customize it:
+   ```bash
+   cp .env.example .env
+   ```
+   
+   Edit the `.env` file in the root directory with your values:
    ```env
+   # ================================
    # Database Configuration
+   # ================================
    DB_Name=your_database_name
    DB_User=your_database_user
    DB_Password=your_secure_password
    DB_Host=db
    DB_Port=5432
 
+   # ================================
    # Django Settings
+   # ================================
    SECRET_KEY=your_super_secret_key_here
-   DEBUG=True
+   DJANGO_DEBUG=True
    ALLOWED_HOSTS=localhost,127.0.0.1
+   DJANGO_CSRF_TRUSTED=https://localhost,https://127.0.0.1,http://127.0.0.1
 
+   # ================================
    # Redis Configuration
+   # ================================
    REDIS_HOST=redis
    REDIS_PORT=6379
 
-   # Additional settings as needed
+   # ================================
+   # Nginx Configuration
+   # ================================
+   # For production: Set your actual domain names
+   SERVER_NAME=example.com
+   SERVER_NAME_WWW=www.example.com
+
+   # Django service configuration for Nginx proxy
+   DJANGO_SERVICE_NAME=web
+   DJANGO_PORT=8080
    ```
 
 3. **Build and run with Docker Compose (Local)**
@@ -121,20 +142,40 @@ A production-ready Django REST API blueprint with Docker, featuring Celery for a
 
 ### Environment Variables
 
-Key environment variables you should configure:
+All services (Django, Celery, and Nginx) use the same `.env` file located in the root directory. Below is the complete list of environment variables:
 
-| Variable | Description | Default |
-|----------|-------------|---------|
-| `DB_Name` | PostgreSQL database name | - |
-| `DB_User` | Database username | - |
-| `DB_Password` | Database password | - |
-| `DB_Host` | Database host | `db` |
-| `DB_Port` | Database port | `5432` |
-| `SECRET_KEY` | Django secret key | - |
-| `DEBUG` | Debug mode | `False` |
-| `ALLOWED_HOSTS` | Allowed hosts | - |
-| `REDIS_HOST` | Redis hostname | `redis` |
-| `REDIS_PORT` | Redis port | `6379` |
+#### Database Configuration
+| Variable | Description | Default | Required |
+|----------|-------------|---------|----------|
+| `DB_Name` | PostgreSQL database name | - | Yes |
+| `DB_User` | Database username | - | Yes |
+| `DB_Password` | Database password | - | Yes |
+| `DB_Host` | Database host | `db` | Yes |
+| `DB_Port` | Database port | `5432` | Yes |
+
+#### Django Settings
+| Variable | Description | Default | Required |
+|----------|-------------|---------|----------|
+| `SECRET_KEY` | Django secret key (use strong random string) | - | Yes |
+| `DJANGO_DEBUG` | Debug mode (use `False` in production) | `False` | Yes |
+| `ALLOWED_HOSTS` | Comma-separated list of allowed hosts | - | Yes |
+| `DJANGO_CSRF_TRUSTED` | Comma-separated list of trusted CSRF origins | - | No |
+
+#### Redis Configuration
+| Variable | Description | Default | Required |
+|----------|-------------|---------|----------|
+| `REDIS_HOST` | Redis hostname | `redis` | Yes |
+| `REDIS_PORT` | Redis port | `6379` | Yes |
+
+#### Nginx Configuration
+| Variable | Description | Default | Required |
+|----------|-------------|---------|----------|
+| `SERVER_NAME` | Primary domain name (production only) | `example.com` | Yes (Prod) |
+| `SERVER_NAME_WWW` | WWW domain name (production only) | `www.example.com` | Yes (Prod) |
+| `DJANGO_SERVICE_NAME` | Django service name in Docker network | `web` | Yes |
+| `DJANGO_PORT` | Django service port | `8080` | Yes |
+
+**Note:** All services read from the same `.env` file in the root directory, ensuring consistency across Django, Celery, and Nginx configurations.
 
 ### Django Settings
 
@@ -202,8 +243,10 @@ docker-compose logs -f celery
 ├── docker-compose.yml              # Production Docker Compose configuration
 ├── docker.compose-local.yml        # Local development Docker Compose configuration
 ├── .dockerignore                   # Docker ignore file
-├── .env                            # Environment variables (create this)
-├── nginx.conf                      # Nginx production configuration
+├── .env                            # Environment variables (create from .env.example)
+├── .env.example                    # Example environment variables template
+├── nginx.conf                      # Nginx production configuration (legacy)
+├── nginx.conf.template             # Nginx production configuration template (uses env vars)
 ├── nginx-local.conf                # Nginx local configuration
 ├── certbot/                        # SSL certificates directory
 ├── src/
