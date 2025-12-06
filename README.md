@@ -157,7 +157,7 @@ All services (Django, Celery, and Nginx) use the same `.env` file located in the
 | Variable | Description | Default | Required |
 |----------|-------------|---------|----------|
 | `DJANGO_SECRET_KEY` | Django secret key (use strong random string) | - | Yes |
-| `DJANGO_DEBUG` | Debug mode (use `False` in production) | `False` | Yes |
+| `DJANGO_DEBUG` | Debug mode (`True` for development, `False` for production) | `False` | Yes |
 | `DJANGO_ALLOWED_HOSTS` | Comma-separated list of allowed hosts | - | Yes |
 | `DJANGO_CSRF_TRUSTED` | Comma-separated list of trusted CSRF origins | - | No |
 
@@ -245,7 +245,7 @@ docker-compose logs -f celery
 ├── .dockerignore                   # Docker ignore file
 ├── .env                            # Environment variables (create from .env.example)
 ├── .env.example                    # Example environment variables template
-├── nginx.conf                      # Nginx production configuration (legacy)
+├── nginx.conf                      # Nginx production configuration (deprecated - kept for reference)
 ├── nginx.conf.template             # Nginx production configuration template (uses env vars)
 ├── nginx-local.conf                # Nginx local configuration
 ├── certbot/                        # SSL certificates directory

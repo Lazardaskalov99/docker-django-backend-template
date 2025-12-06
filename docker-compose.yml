@@ -58,6 +58,7 @@ services:
       - ./certbot/conf/:/etc/nginx/ssl/
       - ./certbot/data:/usr/share/nginx/html
     environment:
+      # These are explicitly set for nginx's envsubst to process the template
       - SERVER_NAME=${SERVER_NAME}
       - SERVER_NAME_WWW=${SERVER_NAME_WWW}
       - DJANGO_SERVICE_NAME=${DJANGO_SERVICE_NAME}
