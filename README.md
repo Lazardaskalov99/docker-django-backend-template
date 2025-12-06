@@ -76,7 +76,7 @@ A production-ready Django REST API blueprint with Docker, featuring Celery for a
    # Django Settings
    # ================================
    DJANGO_SECRET_KEY=your_super_secret_key_here
-   DJANGO_DEBUG=True
+   DJANGO_DEBUG=True  # Set to False in production for security!
    DJANGO_ALLOWED_HOSTS=localhost,127.0.0.1
    DJANGO_CSRF_TRUSTED=https://localhost,https://127.0.0.1,http://127.0.0.1
 
@@ -157,7 +157,7 @@ All services (Django, Celery, and Nginx) use the same `.env` file located in the
 | Variable | Description | Default | Required |
 |----------|-------------|---------|----------|
 | `DJANGO_SECRET_KEY` | Django secret key (use strong random string) | - | Yes |
-| `DJANGO_DEBUG` | Debug mode (`True` for development, `False` for production) | `False` | Yes |
+| `DJANGO_DEBUG` | Debug mode (`True` for development, `False` for production). **SECURITY WARNING:** Never enable debug in production! | `False` | Yes |
 | `DJANGO_ALLOWED_HOSTS` | Comma-separated list of allowed hosts | - | Yes |
 | `DJANGO_CSRF_TRUSTED` | Comma-separated list of trusted CSRF origins | - | No |
 

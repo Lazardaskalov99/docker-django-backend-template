@@ -65,8 +65,10 @@ server {
     # -------------------------
     # Flutter Web App Hosting
     # -------------------------
+    # NOTE: If you have a Flutter web app, mount it as a volume and update this path.
+    # Otherwise, you can remove this location block or configure it for your frontend.
     location / {
-        root /usr/share/flutter-app/html;     # Adjust path for template usage
+        root /usr/share/flutter-app/html;
         index index.html;
         try_files $uri $uri/ /index.html;
     }
