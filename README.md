@@ -54,32 +54,13 @@ A production-ready Django REST API blueprint with Docker, featuring Celery for a
    cd docker-django-backend-blueprint
    ```
 
-2. **Create environment file**
+2. **Adjust environment file**
    
-   Create a `.env` file in the root directory with the following variables:
-   ```env
-   # Database Configuration
-   DB_Name=your_database_name
-   DB_User=your_database_user
-   DB_Password=your_secure_password
-   DB_Host=db
-   DB_Port=5432
-
-   # Django Settings
-   SECRET_KEY=your_super_secret_key_here
-   DEBUG=True
-   ALLOWED_HOSTS=localhost,127.0.0.1
-
-   # Redis Configuration
-   REDIS_HOST=redis
-   REDIS_PORT=6379
-
-   # Additional settings as needed
-   ```
+   Adjust the `.env` file in the root directory
 
 3. **Build and run with Docker Compose (Local)**
    ```bash
-   docker-compose -f docker.compose-local.yml up --build
+   docker-compose -f docker-compose-local.yml up --build
    ```
 
    This will start:
