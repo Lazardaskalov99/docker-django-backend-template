@@ -1,0 +1,59 @@
+name: CI Pipeline
+
+on:
+  pull_request:
+    branches:
+      - main
+  push:
+    branches:
+      - main
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    services:
+      docker:
+        image: docker:19.03.12
+        options: --privileged
+        volumes:
+          - /var/run/docker.sock:/var/run/docker.sock
+        ports:
+          - 5432:5432
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install Docker Compose
+        run: |
+          curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+          chmod +x /usr/local/bin/docker-compose
+          docker-compose --version
+
+      - name: Build and Start services
+        run: |
+          docker-compose -f docker-compose-local.yml up -d
+          sleep 60
+
+      - name: Run Django Tests
+        run: docker exec web sh -c "coverage run --source='.' --data-file=/coverage/.coverage.django manage.py test"
+
+      - name: Run Behave Tests
+        run: docker exec web sh -c "coverage run --source='.' --data-file=/coverage/.coverage.behave manage.py behave --quiet -f progress"
+
+      - name: Combine Coverage Reports
+        run: docker exec web sh -c "coverage combine /coverage/.coverage.django /coverage/.coverage.behave && coverage xml -o /coverage/coverage.xml"
+
+      - name: Copy coverage file to host
+        run: docker cp web:/coverage/coverage.xml /home/runner/work/MeetThere/MeetThere/coverage.xml
+
+      - name: Copy coverage file to host
+        run: docker cp web:/coverage/coverage.xml coverage.xml
+
+      - name: Save coverage report as workflow artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-report
+          path: coverage.xml
+
+      - name: Stop services
+        run: docker-compose down --remove-orphans 
