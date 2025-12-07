@@ -1,56 +1,76 @@
 name: CI Pipeline
 
 on:
-  pull_request:
-    branches:
-      - main
-  push:
-    branches:
-      - main
+  workflow_run:
+    workflows: ["Build & Push Docker Images"]
+    types:
+      - completed
+
 jobs:
-  build:
+  test:
     runs-on: ubuntu-latest
-    services:
-      docker:
-        image: docker:19.03.12
-        options: --privileged
-        volumes:
-          - /var/run/docker.sock:/var/run/docker.sock
-        ports:
-          - 5432:5432
+
+    permissions:
+      contents: read
+      packages: read   # To pull private GHCR images
 
     steps:
+      # Checkout code (needed for compose + tests)
       - name: Checkout code
         uses: actions/checkout@v4
 
+      # Login to GHCR
+      - name: Login to GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      # Install Docker Compose v1 binary (your stack uses it)
       - name: Install Docker Compose
         run: |
-          curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+          curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" \
+            -o /usr/local/bin/docker-compose
           chmod +x /usr/local/bin/docker-compose
           docker-compose --version
 
-      - name: Build and Start services
+      # Pull GHCR images + start stack
+      - name: Pull and Start services
+        env:
+          GHCR_OWNER: ${{ env.GHCR_OWNER }}
+          GHCR_REPO: ${{ env.GHCR_REPO }}
         run: |
-          docker-compose -f docker-compose-local.yml up -d
-          sleep 60
+          docker-compose pull
+          docker-compose up -d
+          sleep 40
 
+      # Django Tests
       - name: Run Django Tests
-        run: docker exec web sh -c "coverage run --source='.' --data-file=/coverage/.coverage.django manage.py test"
+        run: docker exec web sh -c \
+          "coverage run --source='.' --data-file=/coverage/.coverage.django manage.py test"
 
+      # Behave Tests
       - name: Run Behave Tests
-        run: docker exec web sh -c "coverage run --source='.' --data-file=/coverage/.coverage.behave manage.py behave --quiet -f progress"
+        run: docker exec web sh -c \
+          "coverage run --source='.' --data-file=/coverage/.coverage.behave manage.py behave --quiet -f progress"
 
+      # Combine coverage
       - name: Combine Coverage Reports
-        run: docker exec web sh -c "coverage combine /coverage/.coverage.django /coverage/.coverage.behave && coverage xml -o /coverage/coverage.xml"
+        run: docker exec web sh -c \
+          "coverage combine /coverage/.coverage.django /coverage/.coverage.behave && coverage xml -o /coverage/coverage.xml"
 
-      - name: Copy coverage file to host
+      # Copy out coverage XML
+      - name: Copy coverage file
         run: docker cp web:/coverage/coverage.xml ${{ github.workspace }}/coverage.xml
 
-      - name: Save coverage report as workflow artifact
+      # Save artifact
+      - name: Save coverage report
         uses: actions/upload-artifact@v4
         with:
           name: coverage-report
           path: ${{ github.workspace }}/coverage.xml
 
+      # Stop stack
       - name: Stop services
-        run: docker-compose down --remove-orphans 
+        run: docker-compose down --remove-orphans
