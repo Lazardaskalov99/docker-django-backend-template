@@ -22,6 +22,11 @@ jobs:
         run: |
           echo "GHCR_OWNER=${{ github.repository_owner }}" >> $GITHUB_ENV
           echo "GHCR_REPO=${GITHUB_REPOSITORY#*/}" >> $GITHUB_ENV
+          echo "DB_Name=template_db" >> $GITHUB_ENV
+          echo "DB_User=your_database_user" >> $GITHUB_ENV
+          echo "DB_Password=your_secure_password" >> $GITHUB_ENV
+          echo "DB_Host=db" >> $GITHUB_ENV
+          echo "DB_Port=5432" >> $GITHUB_ENV
 
       # Login to GHCR
       - name: Login to GHCR
