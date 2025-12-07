@@ -44,7 +44,7 @@ jobs:
         run: docker exec web sh -c "coverage combine /coverage/.coverage.django /coverage/.coverage.behave && coverage xml -o /coverage/coverage.xml"
 
       - name: Copy coverage file to host
-        run: docker cp web:/coverage/coverage.xml /home/runner/work/MeetThere/MeetThere/coverage.xml
+        run: docker cp web:/coverage/coverage.xml /home/runner/work/coverage.xml
 
       - name: Save coverage report as workflow artifact
         uses: actions/upload-artifact@v4
