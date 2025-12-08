@@ -1,25 +1,5 @@
 services:
 
-  db:
-      image: postgis/postgis
-      platform: linux/amd64
-      container_name: db
-      env_file:
-        - .env
-      environment:
-        POSTGRES_DB: ${DB_Name}
-        POSTGRES_USER: ${DB_User}
-        POSTGRES_PASSWORD: ${DB_Password}
-      volumes:
-        - data_volume:/var/lib/postgresql/data
-      healthcheck:
-        test: [ "CMD", "pg_isready", "-q", "-d", "${DB_Name}", "-U", "${DB_User}" ]
-        interval: 10s
-        timeout: 5s
-        retries: 5
-      networks:
-        - app_network
-
   web:
     image: ghcr.io/${GHCR_OWNER}/${GHCR_REPO}/web:latest
     container_name: web
@@ -83,8 +63,6 @@ volumes:
   media_volume:
     driver: local
   redis_data:
-    driver: local
-  data_volume:
     driver: local
 
 networks:
