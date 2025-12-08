@@ -9,7 +9,14 @@ from apps.gateway.utils import is_whitelisted, get_time_length
 
 default_whitelist = [
     os.path.normpath(path) for path in [ settings.MEDIA_URL, 
-                                        settings.STATIC_URL]]
+                                        settings.STATIC_URL, 
+                                        reverse('admin:index'),
+                                        reverse('admin:login'),
+                                        reverse('request-viewer'),
+                                        reverse('exception-viewer'),
+                                        reverse('modal-content')
+                                        ]
+]
 
 WHITELISTED_PATHS.extend(default_whitelist)
 

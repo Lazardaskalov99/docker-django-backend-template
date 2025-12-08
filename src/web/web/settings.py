@@ -87,7 +87,7 @@ MIDDLEWARE = [
     "django.middleware.locale.LocaleMiddleware",
 
     # Project middleware
-    #"apps.gateway.middlewares.request_logger.RequestLoggingMiddleware",
+    'apps.gateway.middleware.RequestViewerMiddleware',
 ]
 
 
