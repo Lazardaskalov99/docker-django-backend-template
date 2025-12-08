@@ -15,11 +15,9 @@ jobs:
       packages: read
 
     steps:
-      # Checkout for test code & behave tests
       - name: Checkout code
         uses: actions/checkout@v4
 
-      # Normalize GHCR variables
       - name: Set image variables
         run: |
           echo "GHCR_OWNER=${{ github.repository_owner }}" >> $GITHUB_ENV
@@ -32,7 +30,6 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      # Start web container WITHOUT running Daphne
       - name: Start Web test container
         run: |
           docker run -d \
@@ -43,12 +40,11 @@ jobs:
 
       - name: Run Django Tests
         run: |
-          docker exec web python manage.py test
+          docker exec web python manage.py test --settings=web.settings_test
 
       - name: Run Behave Tests
         run: |
-          docker exec web manage.py behave --quiet -f progress
+          docker exec web manage.py behave --settings=web.settings_test --quiet -f progress
 
-      # Cleanup
       - name: Cleanup
-        run: docker rm -f web-test
+        run: docker rm -f web
