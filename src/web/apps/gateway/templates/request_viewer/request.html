@@ -1,3 +1,4 @@
+{% load static %}
 <html>
 <head>
     <title>Request Logger | Dashboard</title>
@@ -114,6 +115,23 @@
             }
         });
     }
-
 </script>
+{% if is_connected %}
+<script>
+    // Auto-refresh for live monitoring
+    setInterval(function() {
+        $.ajax({
+            type: "POST",
+            url: "{% url 'request-viewer' %}",
+            data: {'page': page},
+            success: function (response) {
+                $("#table-data").html(response);
+            },
+            error: function (response) {
+                console.log('Auto-refresh error:', response);
+            }
+        });
+    }, 3000); // Refresh every 3 seconds
+</script>
+{% endif %}
 </html>

@@ -1,9 +1,9 @@
 from django.template.response import TemplateResponse
 from django.urls import reverse
 from django.conf import settings
-import os, traceback
+import os
 
-from apps.gateway.models import RequestModel, ResponseModel, Logger, TemplateResponseModel, ExceptionModel
+from apps.gateway.models import RequestModel, ResponseModel, Logger, TemplateResponseModel
 from apps.gateway.conf import WHITELISTED_PATHS, DATETIME_FORMAT, LIVE_MONITORING
 from apps.gateway.utils import is_whitelisted, get_time_length
 
@@ -13,7 +13,6 @@ default_whitelist = [
                                         reverse('admin:index'),
                                         reverse('admin:login'),
                                         reverse('request-viewer'),
-                                        reverse('exception-viewer'),
                                         reverse('modal-content')
                                         ]
 ]
@@ -50,48 +49,3 @@ class RequestViewerMiddleware:
             return response
 
         return self.get_response(request)
-
-class ExceptionMiddleware:
-    def __init__(self, get_response):
-        self.get_response = get_response
-    
-    def __call__(self, request):
-        return self.get_response(request)
-    
-    def process_exception(self, request, exception):
-        path = request.path
-        if not is_whitelisted(os.path.normpath(path), WHITELISTED_PATHS) and LIVE_MONITORING:
-            self.run_exception(exception)
-    
-    @staticmethod
-    def run_exception(exception):
-        tb = exception.__traceback__
-        
-        traces = traceback.extract_tb(tb)
-        
-        exec_type = type(exception).__name__
-        stacks = []
-        for frame in traces:
-            stack = {
-                'filename': frame.filename,
-                'lineno': frame.lineno,
-                'name': frame.name,
-                'line': frame.line,
-                'locals': frame.locals
-            }
-            stacks.append(stack)
-        if hasattr(exception, "message"):
-            message = exception.message
-        else:
-            message = None
-        
-        last_stack = stacks[-1] if stacks else {}
-        obj = ExceptionModel(
-            func_name=last_stack.get("name"),
-            line_no=last_stack.get("lineno"),
-            line=last_stack.get("line"),
-            exc_type=exec_type,
-            message=message,
-            stacks=stacks
-        )
-        obj.save()

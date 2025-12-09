@@ -28,6 +28,8 @@ class Logger(models.Model):
         for log in logs:
             log_data = log.data
             data.extend(log_data)
+        # Sort by timestamp in descending order (newest first)
+        data.sort(key=lambda x: x.get('request_timestamp', ''), reverse=True)
         return data
 
 
@@ -113,14 +115,3 @@ class TemplateResponseModel(BaseResponse):
             "view": self.view
         }
         return dict(super(TemplateResponseModel, self).__dict__, **data)
-
-
-class ExceptionModel(models.Model):
-    exc_type = models.CharField(max_length=255)
-    message = models.TextField(blank=True, null=True)
-    func_name = models.CharField(max_length=1024)
-    line_no = models.IntegerField()
-    line = models.TextField(blank=True, null=True)
-    stacks = JSONField(default=list)
-    logged_at = models.DateTimeField(auto_now_add=True)
-        

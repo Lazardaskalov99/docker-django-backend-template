@@ -1,13 +1,12 @@
 from django.conf import settings
 from django.contrib.auth.decorators import user_passes_test
-from django.core import serializers
 from django.shortcuts import render
 from django.views import generic
 from django.views.decorators.csrf import csrf_exempt
 from django.core.paginator import Paginator
 import json
 # Create your views here.
-from apps.gateway.models import Logger, ExceptionModel
+from apps.gateway.models import Logger
 
 from django.utils.decorators import method_decorator
 from apps.gateway.utils import is_admin, filter_paths
@@ -45,7 +44,7 @@ class RequestDashboard(BaseView):
     template_name = "request_viewer/request.html"
     model = Logger
     paginator = None
-    middleware = "gateway.middleware.RequestViewerMiddleware"
+    middleware = "apps.gateway.middleware.RequestViewerMiddleware"
 
     def serialize_queryset(self):
         return self.model.get_data()
@@ -60,29 +59,6 @@ class RequestDashboard(BaseView):
         paths = filter_paths(self.paginator.page(page), filter_by, value)
         context = super(RequestDashboard, self).get_context_data(*args, **kwargs)
         context["object_list"] = paths
-        return render(request, self.template_name, context)
-
-
-class ExceptionDashboard(BaseView):
-    template_name = "request_viewer/exception.html"
-    paginator = None
-    queryset = ExceptionModel.objects.all()
-    middleware = "gateway.middleware.ExceptionMiddleware"
-
-    def serialize_queryset(self):
-        obj = json.loads(serializers.serialize("json", self.queryset))
-        q = [x.get("fields") for x in obj]
-        return q
-
-    def post(self, request, **kwargs):
-        self.template_name = "request_viewer/fragments/exception/table.html"
-        filter_by = request.POST.get('filterBy')
-        value = request.POST.get('value')
-        page = request.POST.get('page', 1)
-        page = 1 if not page else page
-        self.get_extra_data()
-        exceptions = self.paginator.page(page)
-        context = {'exceptions': exceptions, 'is_connected': LIVE_MONITORING}
         return render(request, self.template_name, context)
 
 
