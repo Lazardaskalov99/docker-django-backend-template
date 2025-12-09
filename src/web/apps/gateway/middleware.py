@@ -13,7 +13,9 @@ default_whitelist = [
                                         reverse('admin:index'),
                                         reverse('admin:login'),
                                         reverse('request-viewer'),
-                                        reverse('modal-content')
+                                        reverse('modal-content'),
+                                        reverse('clear-logs'),
+                                        reverse('django-logs')
                                         ]
 ]
 

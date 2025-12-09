@@ -24,29 +24,340 @@
             margin-bottom: 100px;
             clear: both;
         }
+        .sortable {
+            user-select: none;
+        }
+        .sort-icon {
+            display: inline-block;
+            margin-left: 4px;
+            font-size: 12px;
+            opacity: 0.5;
+        }
+        .sortable.sorted-asc .sort-icon::before {
+            content: '↑';
+            opacity: 1;
+            font-weight: bold;
+        }
+        .sortable.sorted-desc .sort-icon::before {
+            content: '↓';
+            opacity: 1;
+            font-weight: bold;
+        }
+        .sortable.sorted-asc .sort-icon,
+        .sortable.sorted-desc .sort-icon {
+            opacity: 1;
+        }
+        .monitor-container {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+            margin-bottom: 1rem;
+        }
+        .toggle-btn {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            padding: 0.5rem 1.25rem;
+            font-size: 0.875rem;
+            font-weight: 600;
+            border-radius: 0.5rem;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .toggle-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+        }
+        .toggle-btn:active {
+            transform: translateY(0);
+        }
+        .toggle-btn.active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        .toggle-btn.paused {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+        }
+        .toggle-btn svg {
+            width: 16px;
+            height: 16px;
+            margin-right: 0.5rem;
+        }
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+        .status-badge.online {
+            background: #d1fae5;
+            color: #065f46;
+        }
+        .status-badge.offline {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+        .status-indicator {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+        .status-indicator.green {
+            background: #10b981;
+        }
+        .status-indicator.red {
+            background: #ef4444;
+        }
+        @keyframes pulse {
+            0%, 100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.5;
+            }
+        }
+        .table-container {
+            max-height: 600px;
+            overflow-y: auto;
+            overflow-x: hidden;
+            border-radius: 0.5rem;
+            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+        }
+        .table-container::-webkit-scrollbar {
+            width: 6px;
+        }
+        .table-container::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+        .table-container::-webkit-scrollbar-thumb {
+            background: #cbd5e0;
+            border-radius: 10px;
+        }
+        .table-container::-webkit-scrollbar-thumb:hover {
+            background: #a0aec0;
+        }
+        .page-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #1a202c;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 3px solid #667eea;
+            display: inline-block;
+        }
+        .delete-btn {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            padding: 0.5rem 1.25rem;
+            font-size: 0.875rem;
+            font-weight: 600;
+            border-radius: 0.5rem;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 100%);
+            color: white;
+            margin-left: auto;
+        }
+        .delete-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+            background: linear-gradient(135deg, #ff5252 0%, #e04856 100%);
+        }
+        .delete-btn:active {
+            transform: translateY(0);
+        }
+        .delete-btn svg {
+            width: 16px;
+            height: 16px;
+            margin-right: 0.5rem;
+        }
+        .button-container {
+            display: flex;
+            justify-content: flex-end;
+            margin-bottom: 1rem;
+        }
+        .console-container {
+            background: #1e1e1e;
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+            overflow: hidden;
+        }
+        .console-header {
+            background: #2d2d30;
+            padding: 0.75rem 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid #3e3e42;
+        }
+        .console-title {
+            color: #cccccc;
+            font-size: 0.875rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .console-body {
+            max-height: 300px;
+            overflow-y: auto;
+            padding: 1rem;
+            font-family: 'Courier New', Consolas, monospace;
+            font-size: 0.813rem;
+            line-height: 1.5;
+        }
+        .console-body::-webkit-scrollbar {
+            width: 6px;
+        }
+        .console-body::-webkit-scrollbar-track {
+            background: #252526;
+        }
+        .console-body::-webkit-scrollbar-thumb {
+            background: #4e4e4e;
+            border-radius: 10px;
+        }
+        .console-body::-webkit-scrollbar-thumb:hover {
+            background: #6e6e6e;
+        }
+        .log-entry {
+            margin-bottom: 0.25rem;
+            display: flex;
+            gap: 0.5rem;
+        }
+        .log-timestamp {
+            color: #858585;
+            flex-shrink: 0;
+        }
+        .log-level {
+            flex-shrink: 0;
+            font-weight: 600;
+            min-width: 60px;
+        }
+        .log-level.DEBUG { color: #9cdcfe; }
+        .log-level.INFO { color: #4ec9b0; }
+        .log-level.WARNING { color: #dcdcaa; }
+        .log-level.ERROR { color: #f48771; }
+        .log-level.CRITICAL { color: #f14c4c; }
+        .log-message {
+            color: #d4d4d4;
+            flex: 1;
+            word-break: break-word;
+        }
+        .console-controls {
+            display: flex;
+            gap: 0.5rem;
+        }
+        .console-btn {
+            background: transparent;
+            border: 1px solid #3e3e42;
+            color: #cccccc;
+            padding: 0.25rem 0.75rem;
+            border-radius: 0.25rem;
+            font-size: 0.75rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .console-btn:hover {
+            background: #3e3e42;
+            border-color: #505050;
+        }
+        .console-toggle-btn {
+            background: transparent;
+            border: none;
+            color: #cccccc;
+            cursor: pointer;
+            padding: 0.25rem;
+            display: flex;
+            align-items: center;
+            transition: color 0.2s;
+        }
+        .console-toggle-btn:hover {
+            color: #ffffff;
+        }
+        .console-collapsed .console-body {
+            display: none;
+        }
     </style>
 </head>
 
 <body class="bg-gray-200">
 <div class="container font-sans mx-auto px-4 sm:px-8 mt-4">
-    <h2 class="text-2xl font-semibold leading-tight mb-3">Request Viewer & Logger  [<a class=" text-sm text-indigo-600 hover:text-indigo-900 hover:no-underline" href="{% url 'exception-viewer' %}">Go to Exception Dashboard</a>]</h2>
     <div class="flex flex-col">
-        {% include 'request_viewer/fragments/filter.html' with entity="request" %}
-
-        <div class="py-4 overflow-x-auto">
-            <div class="inline-block min-w-full overflow-hidden">
-                Live Monitoring Status : {% if is_connected %}
-                <span class="text-green-400"
-                      data-toggle="tooltip" data-placement="top" title="Live monitoring is on">●</span>
-            {% else %}
-                <span class="text-red-400"
-                      data-toggle="tooltip" data-placement="top" title="Live monitoring is off">●</span>
-            {% endif %}
-                <br/><br/>
+        <h1 class="page-title">Request Monitoring</h1>
+        <div class="monitor-container">
+            <div class="flex items-center justify-between">
+                <div>
+                    <span class="status-badge {% if is_connected %}online{% else %}offline{% endif %}">
+                        <span id="monitor-status-indicator" class="status-indicator {% if is_connected %}green{% else %}red{% endif %}"></span>
+                        <span>Live Monitoring: <strong id="monitor-text">{% if is_connected %}On{% else %}Off{% endif %}</strong></span>
+                    </span>
+                </div>
+                {% if is_connected %}
+                <button id="toggle-monitor" class="toggle-btn active">
+                    <svg id="play-icon" fill="currentColor" viewBox="0 0 20 20" style="display:none;">
+                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd"/>
+                    </svg>
+                    <svg id="pause-icon" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zM7 8a1 1 0 012 0v4a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v4a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd"/>
+                    </svg>
+                    <span id="toggle-text">Pause Auto-Refresh</span>
+                </button>
+                {% endif %}
             </div>
         </div>
-        <div id="table-data">
-            {% include 'request_viewer/fragments/request/table.html' with paths=paths %}
+        <div class="button-container">
+            <button id="clear-logs-btn" class="delete-btn">
+                <svg fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd"/>
+                </svg>
+                Clear All Logs
+            </button>
+        </div>
+        <div class="console-container" id="console-container">
+            <div class="console-header">
+                <div class="console-title">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M8 5l8 7-8 7V5z"/>
+                    </svg>
+                    Django Console
+                </div>
+                <div class="console-controls">
+                    <button class="console-btn" id="clear-console-btn">Clear</button>
+                    <button class="console-toggle-btn" id="toggle-console-btn">
+                        <svg id="collapse-icon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M7 14l5-5 5 5z"/>
+                        </svg>
+                        <svg id="expand-icon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="display:none;">
+                            <path d="M7 10l5 5 5-5z"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            <div class="console-body" id="console-body">
+                <div class="log-entry">
+                    <span class="log-timestamp">--:--:--</span>
+                    <span class="log-level INFO">INFO</span>
+                    <span class="log-message">Waiting for logs...</span>
+                </div>
+            </div>
+        </div>
+        <div class="table-container">
+            <div id="table-data">
+                {% include 'request_viewer/fragments/request/table.html' with paths=paths %}
+            </div>
         </div>
         <div class="mt-3">
             {% include 'request_viewer/fragments/pagination.html' with paginator=paginator queryset=paths %}
@@ -59,8 +370,17 @@
 <script>
     var $modal = $('#detailsModal');
     var page = '{{ request.GET.page }}';
+    var currentSort = {by: null, order: 'asc'};
+    var autoRefreshEnabled = {% if is_connected %}true{% else %}false{% endif %};
+    var autoRefreshInterval = null;
+    var consoleRefreshInterval = null;
+    
     $(document).ready(function () {
         eventsSetup();
+        {% if is_connected %}
+        startAutoRefresh();
+        {% endif %}
+        startConsoleRefresh();
     });
 
     function eventsSetup() {
@@ -85,53 +405,184 @@
             });
         });
 
-        $(document).on('change', '.filter-method', function () {
-            var selected = $(this).find(':selected').val();
-            console.log(selected)
-            filter('method', selected);
+        $(document).on('click', '.sortable', function () {
+            var sortBy = $(this).data('sort');
+            
+            if (currentSort.by === sortBy) {
+                currentSort.order = currentSort.order === 'asc' ? 'desc' : 'asc';
+            } else {
+                currentSort.by = sortBy;
+                currentSort.order = 'asc';
+            }
+            
+            sortTable(sortBy, currentSort.order);
         });
 
-        $(document).on("keyup", "#paths-search", function (e) {
-            var $input = $(this);
-            setTimeout(function () {
-                filter('search', $input.val());
-            }, 250);
+        $(document).on('click', '#toggle-monitor', function () {
+            autoRefreshEnabled = !autoRefreshEnabled;
+            var $btn = $(this);
+            var $statusBadge = $('.status-badge');
+            var $statusIndicator = $('#monitor-status-indicator');
+            var $text = $('#monitor-text');
+            var $toggleText = $('#toggle-text');
+            var $playIcon = $('#play-icon');
+            var $pauseIcon = $('#pause-icon');
+            
+            if (autoRefreshEnabled) {
+                $toggleText.text('Pause Auto-Refresh');
+                $btn.removeClass('paused').addClass('active');
+                $statusBadge.removeClass('offline').addClass('online');
+                $statusIndicator.removeClass('red').addClass('green');
+                $text.text('On');
+                $playIcon.hide();
+                $pauseIcon.show();
+                startAutoRefresh();
+            } else {
+                $toggleText.text('Resume Auto-Refresh');
+                $btn.removeClass('active').addClass('paused');
+                $statusBadge.removeClass('online').addClass('offline');
+                $statusIndicator.removeClass('green').addClass('red');
+                $text.text('Off');
+                $pauseIcon.hide();
+                $playIcon.show();
+                stopAutoRefresh();
+            }
+        });
+
+        $(document).on('click', '#clear-console-btn', function () {
+            $('#console-body').html('<div class="log-entry"><span class="log-timestamp">--:--:--</span><span class="log-level INFO">INFO</span><span class="log-message">Console cleared.</span></div>');
+        });
+
+        $(document).on('click', '#toggle-console-btn', function () {
+            var $container = $('#console-container');
+            var $collapseIcon = $('#collapse-icon');
+            var $expandIcon = $('#expand-icon');
+            
+            $container.toggleClass('console-collapsed');
+            if ($container.hasClass('console-collapsed')) {
+                $collapseIcon.hide();
+                $expandIcon.show();
+            } else {
+                $collapseIcon.show();
+                $expandIcon.hide();
+            }
+        });
+
+        $(document).on('click', '#clear-logs-btn', function () {
+            if (confirm('Are you sure you want to delete all logs? This action cannot be undone.')) {
+                $.ajax({
+                    type: "POST",
+                    url: "{% url 'clear-logs' %}",
+                    success: function (response) {
+                        $("#table-data").html(response);
+                        alert('All logs have been cleared successfully.');
+                    },
+                    error: function (response) {
+                        alert('Error clearing logs. Please try again.');
+                        console.log(response);
+                    }
+                });
+            }
         });
     }
 
-    function filter(filterBy, value) {
+    function startConsoleRefresh() {
+        // Initial load
+        loadConsoleLogs();
+        
+        // Refresh every 2 seconds
+        consoleRefreshInterval = setInterval(function() {
+            loadConsoleLogs();
+        }, 2000);
+    }
+
+    function loadConsoleLogs() {
+        $.ajax({
+            type: "GET",
+            url: "{% url 'django-logs' %}",
+            success: function (data) {
+                var logs = data.logs;
+                if (logs && logs.length > 0) {
+                    var html = '';
+                    logs.forEach(function(log) {
+                        var timestamp = log.timestamp.split(' ')[1] || '--:--:--';
+                        html += '<div class="log-entry">';
+                        html += '<span class="log-timestamp">' + timestamp + '</span>';
+                        html += '<span class="log-level ' + log.level + '">' + log.level + '</span>';
+                        html += '<span class="log-message">' + escapeHtml(log.message) + '</span>';
+                        html += '</div>';
+                    });
+                    $('#console-body').html(html);
+                    
+                    // Auto-scroll to bottom
+                    var consoleBody = document.getElementById('console-body');
+                    consoleBody.scrollTop = consoleBody.scrollHeight;
+                }
+            },
+            error: function (response) {
+                console.log('Error loading console logs:', response);
+            }
+        });
+    }
+
+    function escapeHtml(text) {
+        var map = {
+            '&': '&amp;',
+            '<': '&lt;',
+            '>': '&gt;',
+            '"': '&quot;',
+            "'": '&#039;'
+        };
+        return text.replace(/[&<>"']/g, function(m) { return map[m]; });
+    }
+
+    function startAutoRefresh() {
+        if (autoRefreshInterval) {
+            clearInterval(autoRefreshInterval);
+        }
+        autoRefreshInterval = setInterval(function() {
+            if (autoRefreshEnabled) {
+                $.ajax({
+                    type: "POST",
+                    url: "{% url 'request-viewer' %}",
+                    data: {'page': page, 'sortBy': currentSort.by, 'sortOrder': currentSort.order},
+                    success: function (response) {
+                        $("#table-data").html(response);
+                        updateSortIndicators(currentSort.by, currentSort.order);
+                    },
+                    error: function (response) {
+                        console.log('Auto-refresh error:', response);
+                    }
+                });
+            }
+        }, 3000);
+    }
+
+    function stopAutoRefresh() {
+        if (autoRefreshInterval) {
+            clearInterval(autoRefreshInterval);
+            autoRefreshInterval = null;
+        }
+    }
+
+    function sortTable(sortBy, sortOrder) {
         $.ajax({
             type: "POST",
             url: "{% url 'request-viewer' %}",
-            data: {'filterBy': filterBy, 'value': value, 'page': page},
+            data: {'sortBy': sortBy, 'sortOrder': sortOrder, 'page': page},
             success: function (response) {
                 $("#table-data").html(response);
-                setTimeout(function () {
-                    $('html, body').animate({scrollTop: $("#table-data").offset().top}, 0);
-                }, 250);
+                updateSortIndicators(sortBy, sortOrder);
             },
             error: function (response) {
                 console.log(response);
             }
         });
     }
+
+    function updateSortIndicators(sortBy, sortOrder) {
+        $('.sortable').removeClass('sorted-asc sorted-desc');
+        $('.sortable[data-sort="' + sortBy + '"]').addClass('sorted-' + sortOrder);
+    }
 </script>
-{% if is_connected %}
-<script>
-    // Auto-refresh for live monitoring
-    setInterval(function() {
-        $.ajax({
-            type: "POST",
-            url: "{% url 'request-viewer' %}",
-            data: {'page': page},
-            success: function (response) {
-                $("#table-data").html(response);
-            },
-            error: function (response) {
-                console.log('Auto-refresh error:', response);
-            }
-        });
-    }, 3000); // Refresh every 3 seconds
-</script>
-{% endif %}
 </html>
