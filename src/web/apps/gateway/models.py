@@ -12,6 +12,10 @@ class Logger(models.Model):
     path = models.CharField(max_length=255, blank=True, null=True)
     data = JSONField(default=list)
     
+    class Meta:
+        verbose_name = "Logger"
+        verbose_name_plural = "Loggers"
+    
     @classmethod
     def get_data(cls, filter_by=None, value=None):
         data = []

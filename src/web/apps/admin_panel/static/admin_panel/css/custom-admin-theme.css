@@ -268,6 +268,7 @@ body {
     margin: var(--spacing-sm) 0 var(--spacing-sm) var(--spacing-lg);
     box-shadow: none;
     transition: all var(--transition-base) var(--transition-timing);
+    gap: var(--spacing-md);
 }
 
 #branding:hover {
@@ -407,15 +408,15 @@ button.theme-toggle,
    Sidebar Navigation
    ==================================================================== */
 #nav-sidebar {
-    background: var(--bg-sidebar) !important;
-    box-shadow: var(--shadow-xl);
-    transition: all var(--transition-base) var(--transition-timing);
+    background: #2d3748 !important;
     border-right: 1px solid var(--border-color);
     overflow-y: auto;
+    padding: 0 var(--spacing-sm);
+    padding-top: 4rem;
 }
 
 #nav-sidebar::-webkit-scrollbar {
-    width: 8px;
+    width: 6px;
 }
 
 #nav-sidebar::-webkit-scrollbar-track {
@@ -428,24 +429,17 @@ button.theme-toggle,
 }
 
 #nav-sidebar::-webkit-scrollbar-thumb:hover {
-    background: rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.15);
 }
 
 #nav-sidebar .section {
     color: var(--text-sidebar) !important;
-    font-weight: 700;
+    font-weight: 600;
     font-size: 0.75rem;
-    letter-spacing: 0.05em;
+    letter-spacing: 0.03em;
     text-transform: uppercase;
-    padding: var(--spacing-md) var(--spacing-lg);
+    padding: var(--spacing-md) var(--spacing-md);
     display: block;
-    transition: all var(--transition-base) var(--transition-timing);
-}
-
-#nav-sidebar .section:hover {
-    background: linear-gradient(90deg, rgba(99, 102, 241, 0.15), transparent);
-    color: var(--primary-light) !important;
-    padding-left: var(--spacing-xl);
 }
 
 #nav-sidebar table {
@@ -455,91 +449,82 @@ button.theme-toggle,
 }
 
 #nav-sidebar caption {
-    background: rgba(0, 0, 0, 0.25);
+    background: rgba(0, 0, 0, 0.2);
     padding: 0;
-    border-bottom: 2px solid var(--primary-color);
-    border-radius: var(--radius-md) var(--radius-md) 0 0;
+    border-bottom: 1px solid rgba(99, 102, 241, 0.3);
+    border-radius: 0;
     overflow: hidden;
 }
 
 #nav-sidebar th {
-    padding: var(--spacing-md) var(--spacing-lg);
+    padding: var(--spacing-sm) var(--spacing-md);
 }
 
 #nav-sidebar th a {
     color: var(--text-sidebar-muted) !important;
     text-decoration: none;
-    transition: all var(--transition-base) var(--transition-timing);
     display: block;
     padding: var(--spacing-sm) var(--spacing-md);
     border-radius: var(--radius-sm);
-    font-weight: 500;
+    font-weight: 400;
 }
 
 #nav-sidebar th a:hover {
     color: var(--text-sidebar) !important;
-    background: rgba(255, 255, 255, 0.08);
-    padding-left: var(--spacing-lg);
-    transform: translateX(4px);
+    background: rgba(255, 255, 255, 0.05);
 }
 
 #nav-sidebar th a[aria-current="page"] {
     color: var(--primary-light) !important;
-    font-weight: 700;
-    background: linear-gradient(90deg, rgba(99, 102, 241, 0.25), transparent);
-    border-left: 3px solid var(--primary-color);
-    padding-left: calc(var(--spacing-md) - 3px);
-    box-shadow: var(--shadow-sm);
+    font-weight: 500;
+    background: rgba(99, 102, 241, 0.15);
+    border-left: 2px solid var(--primary-color);
+    padding-left: calc(var(--spacing-md) - 2px);
 }
 
 #nav-sidebar td {
-    padding: var(--spacing-sm) var(--spacing-lg);
+    padding: 0 var(--spacing-md) var(--spacing-sm);
 }
 
 #nav-sidebar .addlink {
     color: var(--text-sidebar-muted) !important;
     font-size: 0.8125rem;
-    transition: all var(--transition-base) var(--transition-timing);
     padding: var(--spacing-xs) var(--spacing-sm);
     border-radius: var(--radius-sm);
     display: inline-block;
-    border: 1px solid transparent;
 }
 
 #nav-sidebar .addlink:hover {
     color: var(--primary-light) !important;
-    background: rgba(255, 255, 255, 0.08);
-    border-color: rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.05);
 }
 
 #nav-sidebar .addlink::before {
     content: "+ ";
-    font-weight: 700;
-    font-size: 1.1em;
+    font-weight: 600;
 }
 
 #nav-filter {
-    background: rgba(255, 255, 255, 0.08) !important;
-    border: 1.5px solid rgba(255, 255, 255, 0.15) !important;
+    background: rgba(255, 255, 255, 0.05) !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
     color: var(--text-sidebar) !important;
-    padding: var(--spacing-md) var(--spacing-lg);
-    margin: var(--spacing-lg);
-    width: calc(100% - var(--spacing-xl) * 2);
-    border-radius: var(--radius-lg);
-    transition: all var(--transition-base) var(--transition-timing);
+    padding: var(--spacing-sm) var(--spacing-md);
+    margin: var(--spacing-md);
+    width: calc(100% - var(--spacing-md) * 2);
+    border-radius: var(--radius-md);
     font-size: 0.875rem;
 }
 
 #nav-filter::placeholder {
     color: var(--text-sidebar-muted);
-    opacity: 0.6;
+    opacity: 0.5;
 }
 
 #nav-filter:focus {
-    background: rgba(255, 255, 255, 0.12) !important;
+    background: rgba(255, 255, 255, 0.08) !important;
     border-color: var(--primary-color) !important;
     outline: none;
-    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.25);
+    box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.2);
 }
 
 .module {
@@ -553,10 +538,10 @@ button.theme-toggle,
    ==================================================================== */
 .content {
     background: var(--bg-content);
-    padding: var(--spacing-2xl);
-    border-radius: var(--radius-2xl);
+    padding: var(--spacing-lg);
+    border-radius: var(--radius-xl);
     box-shadow: var(--shadow-xl);
-    margin: var(--spacing-xl);
+    margin: var(--spacing-md);
     transition: all var(--transition-base) var(--transition-timing);
     border: 1px solid var(--border-color);
 }
@@ -576,7 +561,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 h1 {
-    font-size: 2.5rem;
+    font-size: 1.5rem;
     margin-bottom: var(--spacing-lg);
     background: linear-gradient(135deg, var(--primary-600), var(--primary-400));
     -webkit-background-clip: text;
@@ -613,12 +598,14 @@ h3 {
 /* ====================================================================
    Forms & Fieldsets
    ==================================================================== */
-fieldset {
-    background: var(--bg-card);
+fieldset,
+.module.aligned,
+fieldset.module.aligned {
+    background: #2d3748 !important;
     border: 1.5px solid var(--border-color);
     border-radius: var(--radius-xl);
-    padding: var(--spacing-2xl);
-    margin: var(--spacing-xl) 0;
+    padding: var(--spacing-md);
+    margin: var(--spacing-md) 0;
     transition: none;
     box-shadow: var(--shadow-sm);
 }
@@ -628,7 +615,7 @@ fieldset:hover {
 }
 
 .form-row {
-    padding: var(--spacing-lg) 0;
+    padding: var(--spacing-sm) 0;
     border-bottom: 1px solid var(--border-light);
     transition: none;
 }
@@ -643,15 +630,16 @@ fieldset:hover {
 
 .flex-container {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     gap: var(--spacing-sm);
+    align-items: center;
 }
 
 label {
     color: var(--text-primary) !important;
     font-weight: 600;
-    font-size: 0.9375rem;
-    margin-bottom: var(--spacing-sm);
+    font-size: 0.875rem;
+    margin-bottom: var(--spacing-xs);
     display: block;
     letter-spacing: 0.01em;
 }
@@ -679,10 +667,10 @@ select {
     background: var(--bg-input) !important;
     border: 1.5px solid var(--border-color) !important;
     color: var(--text-primary) !important;
-    padding: 0.875rem 1rem;
-    border-radius: var(--radius-lg);
+    padding: 0.5rem 0.75rem;
+    border-radius: var(--radius-md);
     transition: all var(--transition-base) var(--transition-timing);
-    font-size: 1rem;
+    font-size: 0.9375rem;
     font-family: inherit;
     width: 100%;
     max-width: 36rem;
@@ -747,7 +735,7 @@ input[type="radio"]:hover {
 .checkbox-row {
     display: flex;
     align-items: center;
-    padding: var(--spacing-md) var(--spacing-lg);
+    padding: var(--spacing-sm) var(--spacing-md);
     border-radius: var(--radius-md);
     transition: none;
 }
@@ -769,13 +757,13 @@ input[type="radio"]:hover {
    ==================================================================== */
 .help {
     color: var(--text-muted) !important;
-    font-size: 0.875rem;
-    line-height: 1.6;
-    margin-top: var(--spacing-md);
-    padding: var(--spacing-lg) var(--spacing-lg);
+    font-size: 0.8125rem;
+    line-height: 1.4;
+    margin-top: var(--spacing-xs);
+    padding: var(--spacing-sm) var(--spacing-md);
     background: var(--bg-hover);
-    border-left: 4px solid var(--info-color);
-    border-radius: var(--radius-md);
+    border-left: 3px solid var(--info-color);
+    border-radius: var(--radius-sm);
     transition: none;
 }
 
@@ -793,10 +781,10 @@ button {
     background: var(--primary-color) !important;
     color: var(--text-inverse) !important;
     border: none;
-    padding: 0.875rem 1.75rem;
-    border-radius: var(--radius-lg);
+    padding: 0.625rem 1.25rem;
+    border-radius: var(--radius-md);
     font-weight: 600;
-    font-size: 0.9375rem;
+    font-size: 0.875rem;
     cursor: pointer;
     transition: all var(--transition-base) var(--transition-timing);
     text-decoration: none;
@@ -831,13 +819,18 @@ input[type="submit"].default:hover {
 .deletelink {
     background: var(--error-color) !important;
     color: var(--text-inverse) !important;
-    padding: 0.875rem 1.75rem;
-    border-radius: var(--radius-lg);
+    padding: 0.625rem 1.25rem;
+    border-radius: var(--radius-md);
     text-decoration: none;
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 2.25rem;
+    line-height: 1.5;
     transition: all var(--transition-base) var(--transition-timing);
     box-shadow: var(--shadow-md);
     font-weight: 600;
+    font-size: 0.875rem;
 }
 
 .deletelink:hover {
@@ -850,14 +843,31 @@ input[type="submit"].default:hover {
    ==================================================================== */
 .submit-row {
     background: var(--bg-hover);
-    padding: var(--spacing-xl) var(--spacing-2xl);
-    border-radius: var(--radius-xl);
-    margin-top: var(--spacing-2xl);
+    padding: var(--spacing-md) var(--spacing-lg);
+    border-radius: var(--radius-lg);
+    margin-top: var(--spacing-lg);
     display: flex;
-    gap: var(--spacing-md);
+    gap: var(--spacing-sm);
     flex-wrap: wrap;
     border-top: 2px solid var(--border-color);
     box-shadow: var(--shadow-sm);
+}
+
+.submit-row input[type="submit"],
+.submit-row .button,
+.submit-row a.button,
+.submit-row button,
+.submit-row .deletelink,
+.submit-row a {
+    min-height: 2.25rem;
+    padding: 0.625rem 1.25rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1.5;
+    box-sizing: border-box;
+    text-align: center;
+    font-size: 0.875rem;
 }
 
 /* ====================================================================
@@ -866,10 +876,18 @@ input[type="submit"].default:hover {
 .object-tools {
     list-style: none;
     padding: 0;
-    margin: var(--spacing-xl) 0;
+    margin: 0;
     display: flex;
     gap: var(--spacing-md);
     flex-wrap: wrap;
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+#content-main {
+    position: relative;
+    padding-top: 3rem;
 }
 
 .object-tools li {
@@ -1050,41 +1068,54 @@ select option:hover {
    Toggle Navigation Button
    ==================================================================== */
 #toggle-nav-sidebar {
-    background: #ffffff;
-    color: var(--primary-color);
-    border: 2px solid var(--border-color);
-    padding: var(--spacing-sm) var(--spacing-md);
+    background: transparent;
+    color: var(--text-primary);
+    border: 1px solid var(--border-color);
     border-radius: var(--radius-md);
+    padding: 0.5rem var(--spacing-md);
     cursor: pointer;
     position: fixed;
-    top: 8rem;
-    left: var(--spacing-xl);
-    z-index: 50;
-    box-shadow: var(--shadow-lg);
-    transition: all var(--transition-base) var(--transition-timing);
-    font-weight: 600;
-    font-size: 0.875rem;
+    top: var(--spacing-md);
+    left: var(--spacing-md);
+    z-index: 1000;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    font-weight: 500;
+    font-size: 1.125rem;
+    margin: 0;
+}
+
+#toggle-nav-sidebar::before {
+    font-size: 1.25rem;
 }
 
 #toggle-nav-sidebar:hover {
     background: var(--bg-hover);
     border-color: var(--primary-color);
-    box-shadow: var(--shadow-xl);
-}
-
-#toggle-nav-sidebar:active {
-    /* Removed transform scale animation */
+    color: var(--primary-color);
 }
 
 .dark-mode #toggle-nav-sidebar {
-    background: var(--bg-content);
-    color: var(--primary-color);
+    background: transparent;
+    color: var(--text-primary);
     border-color: var(--border-color);
 }
 
 .dark-mode #toggle-nav-sidebar:hover {
     background: var(--bg-hover);
     border-color: var(--primary-color);
+    color: var(--primary-color);
+}
+
+/* Add slide transition to sidebar */
+#nav-sidebar {
+    transition: transform 0.3s ease;
+}
+
+body.main-content-expanded #nav-sidebar {
+    transform: translateX(-100%);
 }
 
 /* ====================================================================
@@ -1274,6 +1305,84 @@ select option:hover {
 
 .loading {
     animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* ====================================================================
+   Changelist Search Form - Single Row Layout
+   ==================================================================== */
+#changelist-search {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+}
+
+#changelist-search > div {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    width: 100%;
+}
+
+#changelist-search label {
+    margin: 0;
+    display: flex;
+    align-items: center;
+}
+
+#changelist-search input[type="text"] {
+    flex: 1;
+    margin: 0;
+}
+
+#changelist-search input[type="submit"] {
+    margin: 0;
+    white-space: nowrap;
+}
+
+/* ====================================================================
+   Toolbar and Actions Layout - Column Layout
+   ==================================================================== */
+.changelist-form-container {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+}
+
+#toolbar {
+    width: 100%;
+}
+
+.actions {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--spacing-md);
+}
+
+/* ====================================================================
+   Actions Bar Alignment
+   ==================================================================== */
+.actions {
+    display: flex !important;
+    align-items: center !important;
+    gap: var(--spacing-md) !important;
+    flex-wrap: nowrap !important;
+}
+
+.actions label {
+    display: flex !important;
+    align-items: center !important;
+    gap: var(--spacing-sm) !important;
+    margin: 0 !important;
+}
+
+.actions button {
+    margin-left: auto !important;
+}
+
+.action-counter {
+    white-space: nowrap !important;
 }
 
 /* ====================================================================

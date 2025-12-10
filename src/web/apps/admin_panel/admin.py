@@ -39,7 +39,18 @@ from django.contrib.auth.models import User
 class LoggerAdmin(admin.ModelAdmin):
     list_display = ['id', 'path']
     search_fields = ['path']
+    
+    def changelist_view(self, request, extra_context=None):
+        extra_context = extra_context or {}
+        extra_context['title'] = self.model._meta.verbose_name_plural
+        return super().changelist_view(request, extra_context=extra_context)
 
 # Register default Django models
-admin_panel.register(User)
+class UserAdmin(admin.ModelAdmin):
+    def changelist_view(self, request, extra_context=None):
+        extra_context = extra_context or {}
+        extra_context['title'] = 'Users'
+        return super().changelist_view(request, extra_context=extra_context)
+
+admin_panel.register(User, UserAdmin)
 
