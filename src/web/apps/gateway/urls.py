@@ -1,19 +1,12 @@
 from django.urls import path, include
 from django.contrib import admin
 
-from apps.gateway.views import RequestDashboard, get_modal_content, clear_logs, get_django_logs
 from apps.gateway.ping import ping
+from apps.admin_panel.admin import admin_panel
 
 urlpatterns = [
     path('api/ping/', ping, name='ping'),
-   
-    ## Request Viewer URLs
-    path('api/request-viewer/', RequestDashboard.as_view(), name="request-viewer"),
-    path('api/modal-content/', get_modal_content, name='modal-content'),
-    path('api/clear-logs/', clear_logs, name='clear-logs'),
-    path('api/django-logs/', get_django_logs, name='django-logs'),
     
     ## Admin URLs
-    path("accounts/", include("django.contrib.auth.urls")),
-    path("admin/", admin.site.urls),
+    path('api/admin/', admin_panel.urls),
 ]

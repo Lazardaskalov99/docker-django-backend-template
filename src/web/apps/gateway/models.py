@@ -5,16 +5,7 @@ from django.http import HttpRequest, StreamingHttpResponse
 from datetime import datetime
 
 from .conf import DATETIME_FORMAT
-try:
-    from django.db.models import JSONField
-except ModuleNotFoundError:
-    try:
-        from jsonfield import JSONField
-    except:
-        from django.contrib.postgres.fields import JSONField
-
-
-# Create your models here.
+from django.db.models import JSONField
 
 
 class Logger(models.Model):

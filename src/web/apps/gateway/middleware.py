@@ -3,7 +3,7 @@ from django.urls import reverse
 from django.conf import settings
 import os
 
-from apps.gateway.models import RequestModel, ResponseModel, Logger, TemplateResponseModel
+from apps.admin_panel.models import RequestModel, ResponseModel, Logger, TemplateResponseModel
 from apps.gateway.conf import WHITELISTED_PATHS, DATETIME_FORMAT, LIVE_MONITORING
 from apps.gateway.utils import is_whitelisted, get_time_length
 
@@ -12,10 +12,6 @@ default_whitelist = [
                                         settings.STATIC_URL, 
                                         reverse('admin:index'),
                                         reverse('admin:login'),
-                                        reverse('request-viewer'),
-                                        reverse('modal-content'),
-                                        reverse('clear-logs'),
-                                        reverse('django-logs')
                                         ]
 ]
 
