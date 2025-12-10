@@ -67,6 +67,7 @@ INSTALLED_APPS = [
 
     # Project Apps 
     "apps.gateway",
+    "apps.admin_panel",
 ]
 
 
