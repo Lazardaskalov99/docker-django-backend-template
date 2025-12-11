@@ -302,15 +302,16 @@ body {
 }
 
 #user-tools {
-    padding: var(--spacing-md) var(--spacing-xl);
+    padding: var(--spacing-sm) var(--spacing-md);
     color: var(--text-secondary) !important;
     display: flex;
     align-items: center;
-    gap: var(--spacing-md);
-    font-size: 0.9375rem;
+    gap: var(--spacing-sm);
+    font-size: 0.85rem;
+    line-height: 1.2;
     background: var(--bg-hover);
-    border-radius: var(--radius-lg);
-    margin: var(--spacing-sm) var(--spacing-lg) var(--spacing-sm) 0;
+    border-radius: var(--radius-md);
+    margin: var(--spacing-xs) var(--spacing-md) var(--spacing-xs) 0;
     border: 1px solid var(--border-color);
     transition: all var(--transition-base) var(--transition-timing);
 }
@@ -334,6 +335,7 @@ body {
 #user-tools strong {
     color: var(--text-primary) !important;
     font-weight: 600;
+    margin: 0 var(--spacing-xs);
 }
 
 #user-tools a {
@@ -341,6 +343,7 @@ body {
     text-decoration: none;
     transition: color var(--transition-fast) var(--transition-timing);
     font-weight: 500;
+    padding: 0;
 }
 
 #user-tools a:hover {
@@ -568,18 +571,7 @@ h1 {
     -webkit-text-fill-color: transparent;
     background-clip: text;
     padding-bottom: var(--spacing-lg);
-    border-bottom: 3px solid var(--border-color);
     position: relative;
-}
-
-h1::after {
-    content: '';
-    position: absolute;
-    bottom: -3px;
-    left: 0;
-    width: 80px;
-    height: 3px;
-    background: linear-gradient(90deg, var(--primary-color), transparent);
 }
 
 h2 {
@@ -598,6 +590,9 @@ h3 {
 /* ====================================================================
    Forms & Fieldsets
    ==================================================================== */
+
+
+
 fieldset,
 .module.aligned,
 fieldset.module.aligned {
@@ -756,11 +751,11 @@ input[type="radio"]:hover {
    Help Text
    ==================================================================== */
 .help {
-    color: var(--text-muted) !important;
+    color: #ffffff !important;
     font-size: 0.8125rem;
     line-height: 1.4;
-    margin-top: var(--spacing-xs);
-    padding: var(--spacing-sm) var(--spacing-md);
+    margin: var(--spacing-md) 0;
+    padding: var(--spacing-lg) var(--spacing-xl);
     background: var(--bg-hover);
     border-left: 3px solid var(--info-color);
     border-radius: var(--radius-sm);
@@ -923,8 +918,14 @@ input[type="submit"].default:hover {
    ==================================================================== */
 .datetime {
     display: flex;
-    flex-direction: column;
-    gap: var(--spacing-md);
+    flex-direction: row;
+    gap: var(--spacing-lg);
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.datetime br {
+    display: none;
 }
 
 .datetimeshortcuts {
@@ -1383,6 +1384,138 @@ body.main-content-expanded #nav-sidebar {
 
 .action-counter {
     white-space: nowrap !important;
+}
+
+/* ====================================================================
+   Login Page Compact Styling
+   ==================================================================== */
+/* Center the login form vertically and horizontally */
+body.login {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    min-height: 100vh !important;
+    padding: var(--spacing-md) !important;
+    background: var(--bg-main) !important;
+}
+
+body.login #container {
+    min-height: auto !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 100% !important;
+    max-width: 420px !important;
+    background: transparent !important;
+}
+
+body.login #header {
+    position: relative !important;
+    width: 100% !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    margin-bottom: var(--spacing-lg) !important;
+}
+
+body.login #branding {
+    margin: 0 !important;
+    text-align: center !important;
+    background: transparent !important;
+    padding: 0 !important;
+}
+
+body.login #branding h1 {
+    padding: 0 !important;
+    font-size: 1.75rem !important;
+    margin: 0 0 var(--spacing-xl) 0 !important;
+}
+
+body.login #branding h1 a {
+    color: var(--text-primary) !important;
+    font-weight: 700 !important;
+}
+
+body.login .main {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    background: transparent !important;
+}
+
+body.login .content {
+    width: 100% !important;
+    margin: 0 !important;
+    padding: var(--spacing-xl) !important;
+    box-shadow: var(--shadow-lg) !important;
+    background: var(--bg-content) !important;
+    border: none !important;
+}
+
+body.login #content {
+    background: transparent !important;
+}
+
+body.login #content-main {
+    padding: 0 !important;
+    background: transparent !important;
+}
+
+body.login #login-form {
+    margin: 0 !important;
+    background: transparent !important;
+}
+
+body.login .form-row {
+    margin-bottom: var(--spacing-md) !important;
+    padding: 0 !important;
+    border: none !important;
+    background: transparent !important;
+}
+
+body.login .form-row label {
+    margin-bottom: var(--spacing-xs) !important;
+    font-size: 0.875rem !important;
+}
+
+body.login .form-row input[type="text"],
+body.login .form-row input[type="password"] {
+    width: 100% !important;
+    max-width: 100% !important;
+    padding: 0.625rem 0.875rem !important;
+    font-size: 0.9375rem !important;
+}
+
+body.login .submit-row {
+    margin-top: var(--spacing-lg) !important;
+    padding: 0 !important;
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+
+body.login .submit-row input[type="submit"] {
+    width: 100% !important;
+    padding: 0.75rem 1.5rem !important;
+}
+
+body.login #footer {
+    position: absolute !important;
+    bottom: var(--spacing-md) !important;
+    left: 0 !important;
+    right: 0 !important;
+    text-align: center !important;
+    color: var(--text-muted) !important;
+    font-size: 0.75rem !important;
+}
+
+/* Remove excessive spacing */
+body.login br.clear {
+    display: none !important;
 }
 
 /* ====================================================================
