@@ -1,6 +1,20 @@
 from django.contrib import admin
 from django.urls import path
+from drf_yasg.views import get_schema_view
+from drf_yasg import openapi
+from rest_framework import permissions
 from .views import custom_admin_view, RequestDashboard, get_modal_content, clear_logs, get_django_logs
+
+# Swagger/OpenAPI Schema Configuration - shows all API endpoints
+schema_view = get_schema_view(
+    openapi.Info(
+        title="API Documentation",
+        default_version='v1.0.0',
+        description="API documentation for the Django backend",
+    ),
+    public=False,
+    permission_classes=[permissions.AllowAny],
+)
 
 
 class AdminPanel(admin.AdminSite):
@@ -18,6 +32,7 @@ class AdminPanel(admin.AdminSite):
             path('modal-content/', self.admin_view(get_modal_content), name='modal-content'),
             path('clear-logs/', self.admin_view(clear_logs), name='clear-logs'),
             path('django-logs/', self.admin_view(get_django_logs), name='django-logs'),
+            path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
         ]
         return custom_urls + urls
 

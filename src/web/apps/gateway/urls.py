@@ -1,5 +1,4 @@
-from django.urls import path, include
-from django.contrib import admin
+from django.urls import path
 
 from apps.gateway.ping import ping
 from apps.admin_panel.admin import admin_panel
