@@ -3,7 +3,16 @@ from django.urls import path
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
 from rest_framework import permissions
-from .views import custom_admin_view, RequestDashboard, get_modal_content, clear_logs, get_django_logs
+from .views import (
+    ActiveConnectionsDashboard,
+    RequestDashboard,
+    clear_logs,
+    custom_admin_view,
+    get_django_logs,
+    get_modal_content,
+    websocket_connections_data,
+    websocket_connections_clear,
+)
 
 # Swagger/OpenAPI Schema Configuration - shows all API endpoints
 schema_view = get_schema_view(
@@ -33,6 +42,9 @@ class AdminPanel(admin.AdminSite):
             path('clear-logs/', self.admin_view(clear_logs), name='clear-logs'),
             path('django-logs/', self.admin_view(get_django_logs), name='django-logs'),
             path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
+            path('ws-connections/', self.admin_view(ActiveConnectionsDashboard.as_view()), name='ws-connections'),
+            path('ws-connections/data/', self.admin_view(websocket_connections_data), name='ws-connections-data'),
+            path('ws-connections/clear/', self.admin_view(websocket_connections_clear), name='ws-connections-clear'),
         ]
         return custom_urls + urls
 

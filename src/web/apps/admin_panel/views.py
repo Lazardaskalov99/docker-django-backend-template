@@ -8,10 +8,17 @@ from django.http import JsonResponse
 import json
 import logging
 from django.utils.decorators import method_decorator
+from django.utils import timezone
 
 
 from apps.gateway.models import Logger
-from apps.gateway.utils import is_admin, filter_paths
+from apps.gateway.utils import (
+    clear_ws_connections,
+    filter_paths,
+    get_active_ws_connections,
+    group_connections_by_path,
+    is_admin,
+)
 from apps.gateway.conf import LIVE_MONITORING
 
 # Create a custom log handler to store logs in memory
@@ -135,4 +142,54 @@ def get_django_logs(request):
 
 def custom_admin_view(request):
     return JsonResponse({'message': 'Custom admin panel endpoint'})
+
+
+def _serialize_connection_groups():
+    connections = get_active_ws_connections()
+    grouped = group_connections_by_path(connections)
+    serialized = []
+
+    for path, items in grouped.items():
+        sorted_items = sorted(items, key=lambda x: x.get("connected_at", ""), reverse=True)
+        serialized.append({
+            "path": path,
+            "count": len(sorted_items),
+            "connections": sorted_items,
+        })
+
+    serialized.sort(key=lambda item: item["path"] or "")
+    return serialized
+
+
+@method_decorator(user_passes_test(is_admin), name='dispatch')
+class ActiveConnectionsDashboard(generic.TemplateView):
+    template_name = "admin/websocket_connections.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        connection_groups = _serialize_connection_groups()
+        context["connection_groups"] = connection_groups
+        context["total_connections"] = sum(item["count"] for item in connection_groups)
+        context["last_updated"] = timezone.now().isoformat()
+        return context
+
+
+@csrf_exempt
+@user_passes_test(is_admin)
+def websocket_connections_data(request):
+    return JsonResponse({
+        "data": _serialize_connection_groups(),
+        "last_updated": timezone.now().isoformat(),
+    })
+
+
+@csrf_exempt
+@user_passes_test(is_admin)
+def websocket_connections_clear(request):
+    deleted = clear_ws_connections()
+    return JsonResponse({
+        "deleted": deleted,
+        "data": _serialize_connection_groups(),
+        "last_updated": timezone.now().isoformat(),
+    })
 
