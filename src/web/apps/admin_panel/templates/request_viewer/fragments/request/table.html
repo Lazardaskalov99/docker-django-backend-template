@@ -46,8 +46,8 @@
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap">
                             <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full 
-                                    {% if path.status_code|startswith:'2,3' %} bg-green-100 text-green-800 {% else %}bg-red-100 text-red-800{% endif %}">
-                                          {{ path.status_code }}
+                                    {% if path.status_code >= 200 and path.status_code < 300 %}bg-green-100 text-green-800{% elif path.status_code >= 300 and path.status_code < 400 %}bg-blue-100 text-blue-800{% elif path.status_code >= 400 and path.status_code < 500 %}bg-yellow-100 text-yellow-800{% else %}bg-red-100 text-red-800{% endif %}">
+                                {{ path.status_code }}
                             </span>
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm">
