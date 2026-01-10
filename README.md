@@ -113,12 +113,17 @@ Note: External DB required
    - Nginx reverse proxy
 
 4. **Access the application**
-   - API: http://localhost/api/
-   - Admin Panel: http://localhost/admin/
-   - API Docs (Swagger): http://localhost/swagger/
-   - API Docs (ReDoc): http://localhost/redoc/
-   - Test endpoint: http://localhost/api/ping/
+   - API: http://127.0.0.1/api/
+   - Admin Panel: http://127.0.0.1/api/admin/
+   - API Docs (Swagger): http://127.0.0.1/swagger/
+   - API Docs (ReDoc): http://127.0.0.1/redoc/
+   - Test endpoint: http://127.0.0.1/api/ping/
+   **Admin Panel**: http://127.0.0.1/api/admin/
 
+   - **Create an admin user**
+   ```bash
+   docker exec -it web python manage.py createsuperuser
+   ```
 ### Production Deployment
 
 Production deployment uses pre-built images from GitHub Container Registry (GHCR).
